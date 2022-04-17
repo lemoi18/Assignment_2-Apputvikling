@@ -1,93 +1,234 @@
-import {StatusBar} from 'expo-status-bar';
-import {useState, useEffect} from 'react';
-import {Button, StyleSheet, Text, TextInput, View, Modal, TouchableOpacity} from 'react-native';
+import {
+    deleteDoc, doc, getDoc, setDoc, collection,
+    getDocs,
+    addDoc,
+    updateDoc,
+    query, equalTo,
+
+} from 'firebase/firestore';
+import {useEffect, useState, useRef} from 'react';
+import {Button, LogBox, StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+    LineChart,
+    BarChart,
+    PieChart,
+    ProgressChart,
+    ContributionGraph,
+    StackedBarChart
+} from "react-native-chart-kit";
+
 
 // Using DB Reference
 import {db} from './Core/Config'
-import {Userss} from './Core/Userss'
-import {AddUserForm} from './Core/AddForm'
-import {
-    Update,
-    Delete,
-    Create,
-} from './Core/Database';
-import {deleteDoc, doc, getDoc, setDoc, collection, getDocs} from "firebase/firestore";
+import {Chart} from "./Core/Chart";
+
 
 export default function App() {
-    const initialFormState = {id: null, name: '', username: ''}
+
+    // Storing User Data
+    const [userDoc, setUserDoc] = useState(null)
+    // Update Text
+    const [text, setText] = useState("")
+
+    const isMounted = useRef(false);
+
+
+    const initialFormState = {
+        id: null,
+        classID: '',
+        fName: '',
+        lName: '',
+        DOB: '',
+        className: '',
+        Score: null,
+        Grade: ''
+    }
 
     // Setting state
+    const [users, setUsers] = useState([]);
+    const [usersc, setUsersc] = useState([]);
 
     const usersCollectionRef = collection(db, "users");
 
-    const [users, setUsers] = useState([]);
-    const [userDoc, setUserDoc] = useState(null)
-    const [uuu, setUuu] = useState([{}])
-
     const [currentUser, setCurrentUser] = useState(initialFormState)
     const [editing, setEditing] = useState(false)
-    // Storing User Data
-    // Update Text
-    const [text, setText] = useState("")
-    const [classid, setClassid] = useState("");
-    const [fname, setFname] = useState("");
-    const [lname, setLname] = useState("");
-    const [dob, setDob] = useState("");
-    const [classname, setClassname] = useState("");
-    const [score, setScore] = useState("");
-    const [grade, setGrade] = useState("");
-    const [i,Seti]= useState("0");
-    const [itemsArray, setItemsArray] = useState([]);
-   /* useEffect(() => {
 
-        Read();
-        console.log("here")
-    }, [uuu]);
+    // CRUD operations
+    const addUser = user => {
+        user.id = users.length + 1
+        addDoc(usersCollectionRef, user);
+    }
 
-    const Read = async = () => {
-        // MARK: Reading Doc
-        // You can read what ever document by changing the collection and document path here
-        const myDoc = doc(db, "MyCollection", "MyDocument")
+    const deleteUser = async (id) => {
+        const userDoc = doc(db, "users", id);
+        await deleteDoc(userDoc);
+    };
 
-        getDoc(myDoc)
-            // Handling Promises
-            .then((snapshot) => {
-                // MARK: Success
-                if (snapshot.exists) {
-                    var data = snapshot.data();
-                    const array = Object.values(data);
 
-                    console.log(array)
-                    setItemsArray(array)
-                    setUserDoc(snapshot.data())
-                } else {
-                    alert("No Doc Found")
-                }
-            })
-            .catch((error) => {
-                // MARK: Failure
-                alert(error.message)
-            })
+    const updateUser = (id, updatedUser) => {
+        setEditing(false)
 
-    }*/
+        const userDoc = doc(db, "users", id);
+        updateDoc(userDoc, updatedUser);
+    };
 
+    // const editRow = user => {
+    //     setEditing(true)
+    //
+    //     setCurrentUser({ id: user.id, name: user.name, username: user.username })
+    // }
+/*
     useEffect(() => {
         const getUsers = async () => {
             const data = await getDocs(usersCollectionRef);
-            setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+            setUsers(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
         };
 
         getUsers();
-        console.log(users)
-    }, [usersCollectionRef]);
+    }, [usersCollectionRef]);*/
+
+    const [d,setD] = useState(false);
+
+    const flip = () =>{
+
+        setD(!d);
+
+
+
+
+    }
+
+
+    function course_getter(obj, setCourse,course) {
+        let result = '';
+
+        for (let i in obj) {
+            // obj.hasOwnProperty() is used to filter out properties from the object's prototype chain
+            if (i === "className"){
+                course.includes(obj[i]) ?
+                    console.log("added already")
+                :
+                setCourse(oldArray => [...oldArray, obj[i]
+            ])
+            }
+
+        }
+
+    }
+    function grade_getter(obj, setGrade,course) {
+            let dummy = ``;
+
+        for (let i in obj) {
+            // obj.hasOwnProperty() is used to filter out properties from the object's prototype chain
+
+            if (i === "Grade"){
+                setGrade(oldArray => [...oldArray, obj[i] ])
+            }
+
+        }
+
+    }
+
+    const [grade_course, setCourse_grade]= useState([]);
+
+    const [course, setCourse]= useState([]);
+    const [grade, setGrade]= useState([]);
+
+    useEffect(()=> {
+
+        if (isMounted.current) {
+            const getUsers = async () => {
+                const data = await getDocs(usersCollectionRef);
+                setUsers(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+            };
+
+            getUsers();
+            console.log(users)
+
+
+        } else {
+            isMounted.current = true;
+
+
+        }
+    }, [d]);
+
+
+    const datta = [9, 0, 4, 3, 1, 3]
+
+
+
+    LogBox.ignoreAllLogs()
+
+    useEffect(()=>{
+        for(const student of users) {
+            course_getter(student,setCourse, course)
+        }
+        console.log(course)
+    },[users])
+
+    useEffect(()=>{
+        for(const grades of users) {
+             grade_getter(grades,setGrade, grade)
+        }
+        console.log(grade)
+    },[users])
+
 
     return (
         <View style={styles.container}>
-            <Userss label={'users'} data={users} onSelect={setUuu}/>
-            <Button title='Create New Doc' onPress={Create}></Button>
+            {/*<View style={styles.row}>
+                <View>
+                    {users.map((post, i) =>
+                        <DisplayPost key={i} post={post}/>)}
+                </View>
+                {users.map(item=>
+                    <View style={styles.row}>
+
+                        <text>{item.classID} {item.fName} {item.lName} {item.DOB} {item.className} {item.Score} {item.Grade}</text>
+
+
+
+                    </View>
+                )}
+            </View>
+            <Button title='Test' onPress={() => test(users)}></Button>*/}
+            <Chart course={course} data={datta}/>
+            <Button title='Test' onPress={() => flip()}/>
+
         </View>
     );
-};
+
+    function test(users) {
+        const user = {
+            classID: 'IKT1',
+            fName: 'osk',
+            lName: 'ma',
+            DOB: '12/02/22',
+            className: 'DB',
+            Score: 98,
+            Grade: 'A'
+        }
+        // const user = { id: 2, name: 'tat', username: 'to' }
+        addUser(user)
+        // deleteUser(users[0].id)
+        // updateUser(users[0].id, user)
+        console.log("Hello")
+        console.log(users[0])
+    }
+}
+
+function DisplayPost(props) {
+    console.log("DisplayPost")
+    return (
+        <View>
+            <Text>
+                {props.post.fName} {props.post.lName} {props.post.classID}
+            </Text>
+
+        </View>
+    )
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -96,37 +237,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    button: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#efefef',
-        height: 50,
-        zIndex: 1,
-    },
-    buttonText: {
-        flex: 1,
-        textAlign: 'center',
-    },
-    dropdown: {
-        position: 'absolute',
-        bottom: 100,
-        top: 100,
-        backgroundColor: '#fff',
-        width: '100%',
-        shadowColor: '#000000',
-        shadowRadius: 4,
-        shadowOffset: {height: 4, width: 0},
-        shadowOpacity: 0.5,
-        overflow: "hidden",
 
-    },
-    overlay: {
-        width: '100%',
-        height: '100%',
-    },
-    item: {
-        paddingHorizontal: 10,
-        paddingVertical: 10,
-        borderBottomWidth: 1,
-    },
 });
