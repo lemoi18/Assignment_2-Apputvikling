@@ -24,7 +24,7 @@ export const Chart = ({course,data}) => {
 
             <BarChart
                 data={{
-                    labels: ["A", "B", "C", "D", "F"],
+                    labels: ["A", "B", "C", "D","E", "F"],
                     datasets: [
                         {
                             data: data

@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="763b9fc1-ef24-4c3e-9caf-c2c39c44e2f1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Core/EditForm.js" afterDir="false" />
+    <list default="true" id="763b9fc1-ef24-4c3e-9caf-c2c39c44e2f1" name="Changes" comment="Extracted className and Grade into an object">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Chart.js" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Chart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/EditForm.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,8 +77,17 @@
       <workItem from="1649941892636" duration="2899000" />
       <workItem from="1650030769323" duration="3083000" />
       <workItem from="1650295893289" duration="11045000" />
-      <workItem from="1650351987651" duration="5839000" />
+      <workItem from="1650351987651" duration="6027000" />
+      <workItem from="1650370392973" duration="48000" />
+      <workItem from="1650370448276" duration="11063000" />
     </task>
+    <task id="LOCAL−00001" summary="Extracted className and Grade into an object">
+      <created>1650358043693</created>
+      <option name="number" value="LOCAL−00001" />
+      <option name="presentableId" value="LOCAL−00001" />
+      <updated>1650358043693</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -96,6 +103,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Extracted className and Grade into an object" />
+    <option name="LAST_COMMIT_MESSAGE" value="Extracted className and Grade into an object" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
