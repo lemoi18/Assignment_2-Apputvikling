@@ -77,64 +77,31 @@ export default function App() {
     //
     //     setCurrentUser({ id: user.id, name: user.name, username: user.username })
     // }
-/*
-    useEffect(() => {
-        const getUsers = async () => {
-            const data = await getDocs(usersCollectionRef);
-            setUsers(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
-        };
+    /*
+        useEffect(() => {
+            const getUsers = async () => {
+                const data = await getDocs(usersCollectionRef);
+                setUsers(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+            };
 
-        getUsers();
-    }, [usersCollectionRef]);*/
+            getUsers();
+        }, [usersCollectionRef]);*/
 
-    const [d,setD] = useState(false);
+    const [d, setD] = useState(false);
 
-    const flip = () =>{
+    const flip = () => {
 
         setD(!d);
 
 
-
-
     }
 
+    const [grade_course, setCourse_grade] = useState([]);
 
-    function course_getter(obj, setCourse,course) {
-        let result = '';
+    const [course, setCourse] = useState(new Set());
+    const [grade, setGrade] = useState([]);
 
-        for (let i in obj) {
-            // obj.hasOwnProperty() is used to filter out properties from the object's prototype chain
-            if (i === "className"){
-                course.includes(obj[i]) ?
-                    console.log("added already")
-                :
-                setCourse(oldArray => [...oldArray, obj[i]
-            ])
-            }
-
-        }
-
-    }
-    function grade_getter(obj, setGrade,course) {
-            let dummy = ``;
-
-        for (let i in obj) {
-            // obj.hasOwnProperty() is used to filter out properties from the object's prototype chain
-
-            if (i === "Grade"){
-                setGrade(oldArray => [...oldArray, obj[i] ])
-            }
-
-        }
-
-    }
-
-    const [grade_course, setCourse_grade]= useState([]);
-
-    const [course, setCourse]= useState([]);
-    const [grade, setGrade]= useState([]);
-
-    useEffect(()=> {
+    useEffect(() => {
 
         if (isMounted.current) {
             const getUsers = async () => {
@@ -156,23 +123,42 @@ export default function App() {
 
     const datta = [9, 0, 4, 3, 1, 3]
 
-
-
+    const [grade_num, setGrade_num] = useState([])
     LogBox.ignoreAllLogs()
 
-    useEffect(()=>{
-        for(const student of users) {
-            course_getter(student,setCourse, course)
+    useEffect(() => {
+        for (const student of users) {
+            setCourse(oldArray => new Set([...oldArray, student.className]))
+            setGrade(oldArray => [...oldArray, student.Grade])
+            setCourse_grade(oldArray => [...oldArray, new Object({Grade : student.Grade,className: student.className})])
         }
-        console.log(course)
-    },[users])
 
-    useEffect(()=>{
-        for(const grades of users) {
-             grade_getter(grades,setGrade, grade)
-        }
+
+
+       const result = grade_course.reduce((acc, item) => {
+
+           if (acc[item.className]) {
+                acc[item.className].push(item.Grade);
+            } else {
+                acc[item.className] = [item.Grade];
+            }
+
+            return acc;
+        }, {});
+
+        console.log(result)
+
+
+
+        console.log("--------------------Course--------------------")
+        console.log(course)
+        console.log("--------------------Grade And Course--------------------")
+        console.log(grade_course)
+        console.log("--------------------Grade--------------------")
         console.log(grade)
-    },[users])
+
+
+    }, [users])
 
 
     return (
@@ -193,11 +179,21 @@ export default function App() {
                 )}
             </View>
             <Button title='Test' onPress={() => test(users)}></Button>*/}
-            <Chart course={course} data={datta}/>
+            {
+
+
+                [...course].map((item, i) =>
+                    <View key={i}>
+
+                        <Chart course={item} data={datta}/>
+                    </View>
+                )}
+
             <Button title='Test' onPress={() => flip()}/>
 
         </View>
     );
+
 
     function test(users) {
         const user = {

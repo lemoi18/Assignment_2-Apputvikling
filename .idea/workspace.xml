@@ -5,13 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="763b9fc1-ef24-4c3e-9caf-c2c39c44e2f1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Core/Chart.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Core/EditForm.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/AddForm.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Config.js" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Database.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Userss.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
@@ -82,6 +78,8 @@
       <workItem from="1649758832837" duration="18513000" />
       <workItem from="1649941892636" duration="2899000" />
       <workItem from="1650030769323" duration="3083000" />
+      <workItem from="1650295893289" duration="11045000" />
+      <workItem from="1650351987651" duration="5839000" />
     </task>
     <servers />
   </component>
